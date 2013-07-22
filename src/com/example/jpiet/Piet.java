@@ -21,10 +21,10 @@ public class Piet {
 	
 	public Piet(Logger logger, InOutSystem inOutSystem){
         mMachine = new PietMachine(inOutSystem);
-        
-        
-        mInterpreter = new Interpreter(logger, mMachine, inOutSystem);
-        
+        PolicyStorage policy = PolicyStorage.getInstance();
+        policy.setLogger(logger);
+        policy.setDebugMode(false);
+        mInterpreter = new Interpreter(mMachine);
 	}
 	
 	public void addCommandRunListener(CommandRunListener listener){
@@ -65,10 +65,6 @@ public class Piet {
 	
 	public void createModel(int width, int height){
 		mModel = new CodelTableModel(width, height, CodelColor.WHITE);
-		/*if (mInterpreter.isRun()) {
-			mInterpreter.stop();
-		}*/
-		
 		mInterpreter.setInput(mModel);
 	}
 	
@@ -182,13 +178,19 @@ public class Piet {
         //CodelTableModel model = Piet.createModel("/home/gloryofrobots/bin/hipi/addition.png");
         
         
-        
         Logger logger = new LoggerJavaSdkStdOut();
-
+        
+        PolicyStorage policy = PolicyStorage.getInstance();
+        policy.setLogger(logger);
+        policy.setDebugMode(false);
+        policy.setModelScaner(CodelTableModelScanerIterative.class);
+        //CodelTableModelScanerRecursive
+        
+        
         InOutSystem inOutSystem = new InOutSystemJDK();
         PietMachine machine = new PietMachine(inOutSystem);
-
-        Interpreter interpreter = new Interpreter(logger, machine, inOutSystem);
+        
+        Interpreter interpreter = new Interpreter(machine);
         interpreter.setInput(model);
 
         interpreter.run();

@@ -99,20 +99,4 @@ public class CodelTableModel {
         
         return row;
     }
-
-    /*
-   
-
-    public int getIndex(Codel _cursor) {
-    return getIndex(_cursor.x, _cursor.y);
-    }
-
-    public Codel getCodelCursor(int x, int y) {
-
-    if (x < 0 || x >= mWidth || y < 0 || y >= mHeight) {
-    return null;
-    }
-
-    //return new Codel(x, y);
-    }*/
 }

@@ -31,7 +31,6 @@ public class CodelTableModelScanerIterative implements CodelTableModelScaner {
         }
         
         public boolean hasValueAt(int index){
-            int k = this.getLastIndex();
             if (index < this.x || index >= this.getLastIndex()) {
                 return false;
             }
@@ -57,9 +56,6 @@ public class CodelTableModelScanerIterative implements CodelTableModelScaner {
         }
         
         public void addParent(Area parent) {
-            if( this.parents.contains(parent)) {
-                int bdsm = 1;
-            }
             this.parents.add(parent);
         }
         
@@ -98,19 +94,14 @@ public class CodelTableModelScanerIterative implements CodelTableModelScaner {
     }
     
     private class Area{
-        ArrayList<Segment> segments;
-        boolean touched;
+        private class SegmentList extends ArrayList<Segment>{}
         
+        SegmentList segments;
+
         public Area(Segment first) {
-            segments = new ArrayList<Segment>();
+            segments = new SegmentList();
             first.addParent(this);
             this.segments.add(first);
-            
-            touched = false;
-        }
-        
-        public void untouch() {
-            touched = false;
         }
         
         public void tryToMerge(Segment segment, int delta) {
@@ -130,37 +121,17 @@ public class CodelTableModelScanerIterative implements CodelTableModelScaner {
         
         public void merge(Area area, Segment segment) {
             area.segments.remove(segment);
-            
             for(Segment segment_parent : area.segments) {
-               
                 this.add(segment_parent);
-                //this.touched = true;
-                //segment_parent.addParent(this);
-                //this.segments.listIterator().add(segment);
             }
-        }
-        
-        public boolean hasSegment(Segment segment) {
-            return segments.contains(segment);
         }
         
         public void add(Segment segment) {
-            if (segments.contains(segment)) {
-                int bdsm = 1;
-            }
-            this.touched = true;
             segment.addParent(this);
-            try{
-                this.segments.listIterator().add(segment);
-            }
-            catch (Exception e) {
-                int bdsm = 1;
-            }
-            
+            segments.add(segment);
         }
         
         public void getSegmentsAtRow(int rowIndex, ArrayList<Segment> destination) {
-            //FIX ME
             for (Segment segment : segments) {
                 if (segment.y == rowIndex) {
                     destination.add(segment);
@@ -190,10 +161,6 @@ public class CodelTableModelScanerIterative implements CodelTableModelScaner {
             }
             
             return repr;
-        }
-
-        public boolean isTouched() {
-            return touched;
         }
 
         public List<Segment> getSegments() {
@@ -244,16 +211,13 @@ public class CodelTableModelScanerIterative implements CodelTableModelScaner {
     
     private void mergeSegmentAreas(List<Area> areas, Segment segment) {
         List<Area> parents = segment.getParents();
-        
         Area big_parent = parents.get(0);
+        
         segment.killParents();
+        
         int size = parents.size();
         for (int i = 1; i < size; ++i) {
             Area soonDiedParent = parents.get(i);
-            
-            if(soonDiedParent == big_parent) {
-                int bdsm = 1;
-            }
             big_parent.merge(soonDiedParent, segment);
             areas.remove(soonDiedParent);
         }     
@@ -274,10 +238,6 @@ public class CodelTableModelScanerIterative implements CodelTableModelScaner {
         
         int height = model.getHeight();
         for (int y = 1; y < height; ++y) {
-            
-            if(y == 7) {
-                int bdsm = 1;
-            }
             segments = getSegmentsAtRow(model, y);
             //TODO //CHECK
             if (segments == null) {
@@ -285,14 +245,7 @@ public class CodelTableModelScanerIterative implements CodelTableModelScaner {
             }
             
             for (Segment segment : segments) {
-                //System.out.println("----------------------------");
                 for (Area area : areas) {
-                    //System.out.println(area);
-                    //System.out.println("**************************");
-                    if(area.segments.get(0).value == CodelColor.YELLOW &&
-                            segment.value == CodelColor.YELLOW) {
-                        int bdsm = 1;
-                    }
                     area.tryToMerge(segment, DELTA_DOWN);
                 }
                 
@@ -315,77 +268,7 @@ public class CodelTableModelScanerIterative implements CodelTableModelScaner {
         }*/
         return areas;
     }
-    
-    private Area searchConnectedAreas(CodelTableModel model, int x, int y) {
-        List<Segment> segments = getSegmentsAtRow(model, y);
-        if(segments == null) {
-            return null;
-        }
-        
-        List<Area> areas = new ArrayList<Area>();
-        Area result = null;
-        
-        if (x == 6 && y == 0) {
-            int bdsm = 1;
-            bdsm += 1;
-            int v = bdsm;
-        }
-        for (Segment segment : segments) {
-            Area area = new Area(segment);
-            if (segment.hasValueAt(x)) {
-                result = area;
-            }
-            
-            areas.add(area);
-        }
-        
-        if (result == null) {
-            return null;
-        }
-        
-        fillArea(areas, result, model, y - 1, -1, DELTA_UP);
-        fillArea(areas, result, model, y + 1
-                , model.getHeight(), DELTA_DOWN);
-        
-        return result;
-    }
-    
-    private void fillArea(List<Area> areas, Area result,
-            CodelTableModel model, int first, int last, int delta) {
-        
-        for (int i = first; i != last; i += delta) {
-            for (Area area : areas) {
-                area.untouch();
-            }
-            
-            List<Segment> segments = getSegmentsAtRow(model, i);
-            if (segments == null) {
-                continue;
-            }
-            
-            for (Segment segment: segments) {
-                for(Area area : areas) {
-                    area.tryToMerge(segment, delta);
-                }
-                
-                if (segment.hasParents() == false) {
-                    Area area = new Area(segment);
-                    areas.add(area);
-                }
-                
-                if (segment.hasManyParents()) {
-                    mergeSegmentAreas(areas, segment);
-                }        
-            }
-            
-            for(Area area : areas) {
-                if(area.isTouched() == false && area.equals(result)) {
-                    return;
-                }
-            }
-        }
-    }
-    
+   
    
     
     private CodelTableModel mModel;
@@ -424,8 +307,8 @@ public class CodelTableModelScanerIterative implements CodelTableModelScaner {
         }
         
         if(result == null) {
-            @SuppressWarnings("unused")
-            int bdsm = 1;
+           //TODO LOGGING SINGLETON
+           return;
         }
         
         List<Segment> segments = result.getSegments();

@@ -79,11 +79,14 @@ public class PietTesting {
                         mVerbose);
 
                 Logger logger = new LoggerJavaSdkStdOut();
-
+                PolicyStorage policy = PolicyStorage.getInstance();
+                policy.setLogger(logger);
+                policy.setDebugMode(false);
+                policy.setModelScaner(CodelTableModelScanerIterative.class);
+                
                 PietMachine machine = new PietMachine(inOutTest);
                 
-                Interpreter interpreter = new Interpreter(logger, machine,
-                        inOutTest);
+                Interpreter interpreter = new Interpreter(machine);
                 
                 if(mLimit != -1) {
                     interpreter.setLimit(mLimit);
@@ -146,7 +149,6 @@ public class PietTesting {
         return inputChars;
     }
     
-    
     // CODEL SIZE !!!!!!!!
     public static void main(String[] args) {
         ArrayList<PietTesting.Test> tests = new ArrayList<PietTesting.Test>();
@@ -191,7 +193,7 @@ public class PietTesting {
         
         
 //      SUCCESS!!!!
-        /*
+        
         filename = pathToTestsImages + "/cowsay.png";
         check = "\r\r ___\n< 3 >\n ---\n        \\   ^__^\n         \\  (oo)\\_______\n            (__)\\       )\\/\\\n                ||----w |\n                ||     ||\n";
         input = new PietTesting.TestInput().add("3\n");
@@ -303,7 +305,7 @@ public class PietTesting {
         check = "31405\n";
         input = new PietTesting.TestInput();
         tests.add(new PietTesting.Test(filename, input, check, false));
-        */
+        
         
         filename = pathToTestsImages + "/99bottles.png";
         check = readFile(pathToTestsTexts + "/99bottles.txt");
