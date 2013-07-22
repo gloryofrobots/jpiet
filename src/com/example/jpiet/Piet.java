@@ -172,6 +172,7 @@ public class Piet {
         filename = "/home/gloryofrobots/develop/eclipse_workspace/JPiet/tests/images/addition.png"; //ERROR?
         filename = "/home/gloryofrobots/develop/eclipse_workspace/JPiet/tests/images/piet_bfi.gif";
         filename = "/home/gloryofrobots/develop/piet/hipi/programs/in question/japh.png";
+        filename = "/home/gloryofrobots/develop/piet/hipi/programs/in question/piet_pi.png";
         
         
         //filename = "/home/gloryofrobots/develop/eclipse_workspace/JPiet/tests/images/hw5.png";

@@ -298,14 +298,17 @@ public class PietTesting {
         input = new PietTesting.TestInput();
         limit = 1000;
         tests.add(new PietTesting.Test(filename, input, check, false));
-        */
         
-        
-        filename = "/home/gloryofrobots/develop/piet/hipi/programs/in question/99bottles.png";
-        check = readFile("/home/gloryofrobots/develop/piet/hipi/programs/in question/99bottles.txt");
+        filename = pathToTestsImages + "/piet_pi.png";
+        check = "31405\n";
         input = new PietTesting.TestInput();
         tests.add(new PietTesting.Test(filename, input, check, false));
+        */
         
+        filename = pathToTestsImages + "/99bottles.png";
+        check = readFile(pathToTestsTexts + "/99bottles.txt");
+        input = new PietTesting.TestInput();
+        tests.add(new PietTesting.Test(filename, input, check, false));
         
         long startTime = System.nanoTime();
         for (PietTesting.Test test : tests) {
@@ -334,10 +337,6 @@ public class PietTesting {
 
         long duration = endTime - startTime;
         System.out.printf("TIME %d", duration);
-        
-        /*while(true) {
-            
-        }*/
     }
     
 }
