@@ -10,7 +10,7 @@ public class InOutSystemTest implements InOutSystem {
     boolean mVerbose;
     
     public InOutSystemTest(int[] input, boolean verbose) {
-        mVerbose = verbose;
+        ///mVerbose = true;
         this.output = new String();
         this.cursor = 0;
         this.input = input;
@@ -40,7 +40,7 @@ public class InOutSystemTest implements InOutSystem {
     @Override
     public void write(int symbol) {
         if (mVerbose) {
-            System.out.print(symbol);
+            System.out.printf("OUT %s\n",String.valueOf(symbol));
         }
         output += String.valueOf(symbol);
     }
@@ -48,7 +48,7 @@ public class InOutSystemTest implements InOutSystem {
     @Override
     public void write(String str) {
         if (mVerbose) {
-            System.out.print(str);
+            System.out.printf("OUT %s\n", str);
         }
         output += str;
     }

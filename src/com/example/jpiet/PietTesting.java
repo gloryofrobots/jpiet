@@ -207,11 +207,11 @@ public class PietTesting {
 
         
         
-    /*    filename = pathToTestsImages + "/adder.png";
+          filename = pathToTestsImages + "/adder.png";
         check = "nn2+2=4";
         input = new PietTesting.TestInput().add(2,2);
         tests.add(new PietTesting.Test(filename, input, check, false));
-        
+        /*
         filename = pathToTestsImages + "/alpha_filled.png";
         check = "abcdefghijklmnopqrstuvwxyz";
         input = new PietTesting.TestInput();
@@ -305,7 +305,7 @@ public class PietTesting {
         input = "";
         tests.add(new PietTesting.Test(filename, input, check, false));
         */
-        
+       
         
         for (PietTesting.Test test : tests) {
             if (test.makeTest() == false) {

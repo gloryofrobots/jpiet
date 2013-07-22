@@ -1,5 +1,8 @@
 package com.example.jpiet;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CodelTableModel {
 /*
  * Model of interpreter
@@ -51,6 +54,9 @@ public class CodelTableModel {
 
     public CodelColor getValue(int x, int y) {
         int index = getIndex(x, y);
+        if(index == 196){
+            int bdsm = 1;
+        }
         return mData[index];
     }
 
@@ -80,6 +86,18 @@ public class CodelTableModel {
         for(int i = 0; i < mSize; ++i) {
             colors[i] = mData[i].getARGB();
         }
+    }
+
+    public List<CodelColor> getRow(int index) {
+        ArrayList<CodelColor> row = new ArrayList<CodelColor>();
+        int first = mWidth*index;
+        int last = first + mWidth;
+        for(int i = 0; i < mWidth; ++i) {
+            CodelColor color = getValue(i, index);
+            row.add(color);
+        }
+        
+        return row;
     }
 
     /*

@@ -21,6 +21,8 @@ public class Interpreter {
     InOutSystem mInOutSystem;
     ExecutionStepListener mExecutionStepListener;
     
+    
+    
 	public Interpreter(Logger _logger, PietMachine _machine, InOutSystem inOutSystem) {
         // TODO Auto-generated constructor stub
         mLogger = _logger;
@@ -32,8 +34,13 @@ public class Interpreter {
         mCurrentCodel = new Codel();
         mNextCodel = new Codel();
         mEdgeCodel = new Codel();
-
-        mModelScaner = new CodelTableModelScaner();
+        
+        if(mRecursive) {
+            mModelScaner = new CodelTableModelScanerRecursive();
+        }
+        else {
+            mModelScaner = new CodelTableModelScanerIterative();
+        }
     }
 	
     /**
@@ -158,6 +165,7 @@ public class Interpreter {
     private CodelArea findCodelArea(Codel codel) {
         mModelScaner.scanForCodelNeighbors(codel.x, codel.y);
         CodelArea area = mModelScaner.getCodelArea();
+        System.out.printf("STEP:%d %s\n", mStepNumber, area);
         return area;
     }
     
@@ -211,7 +219,7 @@ public class Interpreter {
         CodelChoser codelChoser = mMachine.getCodelChoser();
         DirectionPointer directionPointer = mMachine.getDirectionPointer();
         //FIXME
-        if(mStepNumber >= 26){
+        if(mStepNumber >= 12){
             int x = 2;
         }
         for(int attempt = 0; attempt < 8; ++attempt) {
@@ -323,8 +331,9 @@ public class Interpreter {
         mNextCodel.set(x, y);
     }
 
-    boolean mDebugTrace = false;
-
+    boolean mDebugTrace = true;
+    
+    boolean mRecursive = false;
     
 	public Codel getCurrentCodel() {
 		// TODO Auto-generated method stub

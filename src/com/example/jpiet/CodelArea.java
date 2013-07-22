@@ -161,8 +161,17 @@ class CodelArea {
         for(Codel codel : mCodels) {
             codel.set(x, y);
         }
-      
+        //FIXME
         color = codelColor;
         size = 1;
+    }
+    
+    public String toString() {
+        String repr = "";
+        for(Codel codel : mCodels) {
+            repr += codel;
+        }
+        
+        return repr;
     }
 }
