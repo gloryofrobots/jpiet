@@ -191,27 +191,30 @@ public class PietTesting {
         
         
 //      SUCCESS!!!!
-        
-//        filename = pathToTestsImages + "/cowsay.png";
-//        check = "\r\r ___\n< 3 >\n ---\n        \\   ^__^\n         \\  (oo)\\_______\n            (__)\\       )\\/\\\n                ||----w |\n                ||     ||\n";
-//        input = new PietTesting.TestInput().add("3\n");
-//        tests.add(new PietTesting.Test(filename, input, check, false));
-//        
-//        
-//        filename = pathToTestsImages + "/helloworld-mondrian.png";
-//        check = "Hello, world!\n";
-//        input = new PietTesting.TestInput();
-//        tests.add(new PietTesting.Test(filename, input, check, false));
+        /*
+        filename = pathToTestsImages + "/cowsay.png";
+        check = "\r\r ___\n< 3 >\n ---\n        \\   ^__^\n         \\  (oo)\\_______\n            (__)\\       )\\/\\\n                ||----w |\n                ||     ||\n";
+        input = new PietTesting.TestInput().add("3\n");
+        tests.add(new PietTesting.Test(filename, input, check, false));
         
         
-
+        filename = pathToTestsImages + "/helloworld-mondrian.png";
+        check = "Hello, world!\n";
+        input = new PietTesting.TestInput();
+        tests.add(new PietTesting.Test(filename, input, check, false));
         
-        
-          filename = pathToTestsImages + "/adder.png";
+        filename = pathToTestsImages + "/adder.png";
         check = "nn2+2=4";
         input = new PietTesting.TestInput().add(2,2);
         tests.add(new PietTesting.Test(filename, input, check, false));
-        /*
+
+        
+        filename = pathToTestsImages + "/adder.png";
+        check = "nn2+2=4";
+        input = new PietTesting.TestInput().add(2,2);
+        tests.add(new PietTesting.Test(filename, input, check, false));
+       
+        
         filename = pathToTestsImages + "/alpha_filled.png";
         check = "abcdefghijklmnopqrstuvwxyz";
         input = new PietTesting.TestInput();
@@ -294,22 +297,19 @@ public class PietTesting {
         check = "Piet";
         input = new PietTesting.TestInput();
         limit = 1000;
-        tests.add(new PietTesting.Test(filename, input, check, false));*/
-        
-        
-
-        
-        /*
-        filename = "/home/gloryofrobots/develop/piet/hipi/programs/in question/99bottles.png";
-        check = readFile("/home/gloryofrobots/develop/piet/hipi/programs/in question/99bottles.txt");
-        input = "";
         tests.add(new PietTesting.Test(filename, input, check, false));
         */
-       
         
+        
+        filename = "/home/gloryofrobots/develop/piet/hipi/programs/in question/99bottles.png";
+        check = readFile("/home/gloryofrobots/develop/piet/hipi/programs/in question/99bottles.txt");
+        input = new PietTesting.TestInput();
+        tests.add(new PietTesting.Test(filename, input, check, false));
+        
+        
+        long startTime = System.nanoTime();
         for (PietTesting.Test test : tests) {
             if (test.makeTest() == false) {
-                String result = test.getResult();
                 System.out.printf("test %s failed\n needed %s but get %s \n",
                         test, test.getWanted(), test.getResult());
                 failedTests.add(test);
@@ -328,11 +328,16 @@ public class PietTesting {
             for (PietTesting.Test test : failedTests) {
                 System.out.println(test);
             }
-
         }
-    
         
-       
+        long endTime = System.nanoTime();
+
+        long duration = endTime - startTime;
+        System.out.printf("TIME %d", duration);
+        
+        /*while(true) {
+            
+        }*/
     }
     
 }

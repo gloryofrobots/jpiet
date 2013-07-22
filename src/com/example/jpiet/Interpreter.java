@@ -165,7 +165,11 @@ public class Interpreter {
     private CodelArea findCodelArea(Codel codel) {
         mModelScaner.scanForCodelNeighbors(codel.x, codel.y);
         CodelArea area = mModelScaner.getCodelArea();
-        System.out.printf("STEP:%d %s\n", mStepNumber, area);
+       
+        if(mDebugTrace == true) {
+            System.out.printf("STEP:%d %s\n", mStepNumber, area);
+        }
+        
         return area;
     }
     
@@ -331,7 +335,7 @@ public class Interpreter {
         mNextCodel.set(x, y);
     }
 
-    boolean mDebugTrace = true;
+    boolean mDebugTrace = false;
     
     boolean mRecursive = false;
     
