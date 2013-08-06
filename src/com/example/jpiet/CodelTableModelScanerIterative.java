@@ -94,7 +94,9 @@ public class CodelTableModelScanerIterative implements CodelTableModelScaner {
     }
     
     private class Area{
-        private class SegmentList extends ArrayList<Segment>{}
+        private class SegmentList extends ArrayList<Segment>{
+            private static final long serialVersionUID = 1661298220478053913L;
+            }
         
         SegmentList segments;
 
@@ -317,10 +319,6 @@ public class CodelTableModelScanerIterative implements CodelTableModelScaner {
             int last = segment.getLastIndex();
             int first = segment.x;
             for(int i = first; i < last; ++i) {
-              //FIXME THIS IS WEIGHT
-                if(x == i && y == segment.y){
-                    continue;
-                }
                 mArea.add(i, segment.y);
             }
         }

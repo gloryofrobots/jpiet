@@ -82,7 +82,7 @@ public class PietTesting {
                 PolicyStorage policy = PolicyStorage.getInstance();
                 policy.setLogger(logger);
                 policy.setDebugMode(false);
-                policy.setModelScaner(CodelTableModelScanerIterative.class);
+                policy.setModelScaner(CodelTableModelScanerRecursiveFold.class);
                 
                 PietMachine machine = new PietMachine(inOutTest);
                 
@@ -312,6 +312,19 @@ public class PietTesting {
         input = new PietTesting.TestInput();
         tests.add(new PietTesting.Test(filename, input, check, false));
         
+        
+        /*
+        filename = pathToTestsImages + "/piet_pi.png";
+        check = "31405\n";
+        input = new PietTesting.TestInput();
+        tests.add(new PietTesting.Test(filename, input, check, false));
+        */
+        /*
+        filename = pathToTestsImages + "/red_square.png";
+        check = "31405\n";
+        input = new PietTesting.TestInput();
+        tests.add(new PietTesting.Test(filename, input, check, false));
+        */
         long startTime = System.nanoTime();
         for (PietTesting.Test test : tests) {
             if (test.makeTest() == false) {
@@ -339,6 +352,12 @@ public class PietTesting {
 
         long duration = endTime - startTime;
         System.out.printf("TIME %d", duration);
+        /*
+        for(CodelColor color : CodelColor.values()) {
+           
+            System.out.println(color.toString() + " -- " +   Integer.toHexString(color.getARGB()));
+        }*/
+    
     }
     
 }
